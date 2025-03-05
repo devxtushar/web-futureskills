@@ -1,11 +1,8 @@
-import "./App.css";
+import Nav from "./components/Nav";
+import "../src/css/Global.css";
 
 function App() {
-  return (
-    <div>
-      <h1 className="text-2xl">Setup done for future skills with tailwind</h1>
-    </div>
-  );
+  return <Nav />;
 }
 
 export default App;
