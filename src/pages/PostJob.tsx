@@ -1,7 +1,11 @@
 import { GoDotFill } from "react-icons/go";
 import { AiFillFire } from "react-icons/ai";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { useState } from "react";
+import PostJobModal from "../components/PostJobModal";
+
 function PostJob() {
+  const [postjobModal, setPostJobModal] = useState(false);
   return (
     <main>
       <section className="max_width">
@@ -10,7 +14,10 @@ function PostJob() {
             <span className="text-black"> Post </span>
             <span style={{ color: "#0d9488" }}>Jobs</span>
           </h1>
-          <button className="flex flex-row gap-2 items-center justify-center">
+          <button
+            className="flex flex-row gap-2 items-center justify-center"
+            onClick={() => setPostJobModal(true)}
+          >
             <AiOutlinePlusCircle size={18} color="white" />
             <span className="t4"> PostJobs</span>
           </button>
@@ -72,6 +79,7 @@ function PostJob() {
           </div>
         </div>
       </section>
+      {postjobModal && <PostJobModal />}
     </main>
   );
 }

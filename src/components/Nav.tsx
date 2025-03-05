@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
+import LoginModal from "./LoginModal";
+import { useState } from "react";
+import SignupModal from "./SignupModal";
 
 function Nav() {
+  const [loginModal, setLoginModal] = useState(false);
+  const [signupModal, setSignupModal] = useState(false);
+
   return (
     <nav>
       <div className="max_width flex flex-wrap justify-between gap-5 nav_inside">
@@ -28,10 +34,16 @@ function Nav() {
           </div>
         </div>
         <div className="flex gap-5">
-          <button className="t5">Login</button>
-          <button className="t5">Signup</button>
+          <button className="t5" onClick={() => setLoginModal(true)}>
+            Login
+          </button>
+          <button className="t5" onClick={() => setSignupModal(true)}>
+            Signup
+          </button>
         </div>
       </div>
+      {loginModal && <LoginModal />}
+      {signupModal && <SignupModal />}
     </nav>
   );
 }
