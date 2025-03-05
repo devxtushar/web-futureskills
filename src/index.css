@@ -6,7 +6,7 @@
   line-height: 1.5;
   font-weight: 400;
   background-color: #f5f7f9;
-  color: black;
+  color: #64748b;
   --basecolor: #0d9488;
 }
 * {
@@ -25,6 +25,8 @@ main {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 h1 {
@@ -78,6 +80,7 @@ button {
   border-radius: 4px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border: none;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 765px) and (max-width: 1280px) {

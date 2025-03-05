@@ -10,12 +10,12 @@ function Nav() {
         <div>
           <div className="flex flex-wrap gap-10 justify-center items-center">
             <h3 className="cursor-pointer">Home</h3>
-            <h3 className="cursor-pointer">Status</h3>
+            <h3 className="cursor-pointer">My Applications</h3>
           </div>
         </div>
         <div className="flex gap-5">
-          <button className="t5">Register as Tutor</button>
-          <button className="t5">Register as Candidate</button>
+          <button className="t5">Login</button>
+          <button className="t5">Signup</button>
         </div>
       </div>
     </nav>
