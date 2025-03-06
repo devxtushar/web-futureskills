@@ -9,7 +9,7 @@ function Home() {
     queryKey: ["jobs"],
     queryFn: () => getAPI(`jobs`),
   });
-  if (isError) return <h1>Something went wrong!Refresh </h1>;
+  if (isError) return <h1>Something went wrong!Refresh Page </h1>;
   if (!data) return null;
 
   const { getJobs } = data;

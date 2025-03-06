@@ -1,11 +1,5 @@
-import axios, { AxiosInstance } from "axios";
 import { toast } from "react-toastify";
-
-const BASE_URL = "http://localhost:5000/";
-
-const api: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-});
+import api from "./authMiddleware";
 
 export const getAPI = async (endPoint: string) => {
   try {
