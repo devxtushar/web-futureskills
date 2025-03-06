@@ -79,7 +79,9 @@ function PostJob() {
           </div>
         </div>
       </section>
-      {postjobModal && <PostJobModal />}
+      {postjobModal && (
+        <PostJobModal closeModal={() => setPostJobModal(false)} />
+      )}
     </main>
   );
 }

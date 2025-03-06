@@ -1,11 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import { useState } from "react";
 import SignupModal from "./SignupModal";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function Nav() {
+  const navigate = useNavigate();
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
+
+  function handleLogout() {
+    Cookies.remove("accessToken");
+    Cookies.remove("role");
+    toast("Logout Successful!", { autoClose: 1000 });
+    navigate("/");
+  }
 
   return (
     <nav>
@@ -34,16 +44,23 @@ function Nav() {
           </div>
         </div>
         <div className="flex gap-5">
-          <button className="t5" onClick={() => setLoginModal(true)}>
-            Login
-          </button>
+          {Cookies.get("accessToken") ? (
+            <button className="t5" onClick={() => handleLogout()}>
+              Logout
+            </button>
+          ) : (
+            <button className="t5" onClick={() => setLoginModal(true)}>
+              Login
+            </button>
+          )}
+
           <button className="t5" onClick={() => setSignupModal(true)}>
             Signup
           </button>
         </div>
       </div>
-      {loginModal && <LoginModal />}
-      {signupModal && <SignupModal />}
+      {loginModal && <LoginModal closeModal={() => setLoginModal(false)} />}
+      {signupModal && <SignupModal closeModal={() => setSignupModal(false)} />}
     </nav>
   );
 }

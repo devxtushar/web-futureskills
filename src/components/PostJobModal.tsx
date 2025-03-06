@@ -1,10 +1,17 @@
-function PostJobModal() {
+import { AiOutlineCloseCircle } from "react-icons/ai";
+function PostJobModal({ closeModal }: { closeModal: () => void }) {
   return (
     <div className="modal_overlay">
       <div className="modal">
         <form className="flex flex-col gap-10">
-          <div>
-            <h2>PostJob !</h2>
+          <div className="flex flex-row justify-between items-center">
+            <h2>PostJob!</h2>
+            <AiOutlineCloseCircle
+              size={30}
+              color="#64748b"
+              className="cursor-pointer"
+              onClick={closeModal}
+            />
           </div>
           <div>
             <input type="text" placeholder="Enter you title" />
