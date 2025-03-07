@@ -1,6 +1,6 @@
 # Mini HR Dashboard Frontend
 
-This is the frontend for the **Mini HR Dashboard**, where candidates can search for jobs, and recruiters can post and manage job listings.
+This is the frontend for the **Mini HR Dashboard**, where candidates can apply for jobs, and recruiters can post and manage job listings.
 
 ## 🚀 Live Demo
 [Mini HR Dashboard](https://futureskillers.vercel.app/)
@@ -27,13 +27,13 @@ This is the frontend for the **Mini HR Dashboard**, where candidates can search 
 
 ## 📸 Screenshots
 ### Job Posting View (Recruiter)
-![Job Posting](./Screenshot%20(14).png)
+![Job Posting](public/Screenshot%20(14).png)
 
 ### Job Search View (Candidate)
-![Job Search](./Screenshot%20(15).png)
+![Job Search](public/Screenshot%20(15).png)
 
 ### Candidate Dashboard
-![Candidate Dashboard](./Screenshot%20(16).png)
+![Candidate Dashboard](public/Screenshot%20(16).png)
 
 ## 🚀 Getting Started
 
@@ -48,7 +48,7 @@ cd web-futureskills
 npm install
 ```
 
-### 3. Start the development server (on localhost)
+### 3. Start the development server
 ```sh
 npm run dev
 ```
@@ -58,5 +58,6 @@ This project is licensed under the MIT License.
 
 ## 📞 Contact
 For any queries, reach out at [devxtushar@gmail.com](mailto:devxtushar@gmail.com).
+
 
 
