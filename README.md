@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# Mini HR Dashboard Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the **Mini HR Dashboard**, where candidates can search for jobs, and recruiters can post and manage job listings.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[Mini HR Dashboard](https://futureskillers.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📂 Repository
+[GitHub - web-futureskills](https://github.com/devxtushar/web-futureskills)
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### For Candidates:
+- View job descriptions and statuses.
+- Apply for jobs directly through the home page.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### For Recruiters:
+- Post new job listings.
+- Update and manage job postings.
+- Review applications from candidates.
+
+## 🛠 Tech Stack
+- **Frontend:** React.js, TypeScript, Tailwind CSS
+- **State Management & Data Fetching:** React Query (useQuery)
+- **Backend:** Express.js, MongoDB
+- **Deployment:** Vercel (Frontend), AWS (Backend)
+
+## 📸 Screenshots
+### Job Posting View (Recruiter)
+![Job Posting](./Screenshot%20(14).png)
+
+### Job Search View (Candidate)
+![Job Search](./Screenshot%20(15).png)
+
+### Candidate Dashboard
+![Candidate Dashboard](./Screenshot%20(16).png)
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+```sh
+git clone https://github.com/devxtushar/web-futureskills.git
+cd web-futureskills
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Install dependencies
+```sh
+npm install
 ```
+
+### 3. Start the development server (on localhost)
+```sh
+npm run dev
+```
+
+## 📄 License
+This project is licensed under the MIT License.
+
+## 📞 Contact
+For any queries, reach out at [devxtushar@gmail.com](mailto:devxtushar@gmail.com).
+
+
