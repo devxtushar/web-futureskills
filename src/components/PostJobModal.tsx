@@ -1,9 +1,15 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { postAPI } from "../services/apiCalls";
+import { postAPI, putAPI } from "../services/apiCalls";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-function PostJobModal({ closeModal }: { closeModal: () => void }) {
+function PostJobModal({
+  closeModal,
+  items,
+}: {
+  closeModal: () => void;
+  items: any;
+}) {
   const queryClient = useQueryClient();
   type Inputs = {
     title: string;
@@ -16,7 +22,13 @@ function PostJobModal({ closeModal }: { closeModal: () => void }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      title: items.title || "",
+      description: items.description || "",
+      status: items.status || "",
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: (data: object) => postAPI("jobs", data),
@@ -29,15 +41,30 @@ function PostJobModal({ closeModal }: { closeModal: () => void }) {
       console.error("Error creating job", error);
     },
   });
+  const updateMutation = useMutation({
+    mutationFn: (data: object) => putAPI("jobs", { ...data, _id: items._id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      reset();
+      closeModal();
+    },
+    onError: (error) => {
+      console.error("Error creating job", error);
+    },
+  });
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     mutation.mutate(data);
+  };
+  const onUpdate: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    updateMutation.mutate(data);
   };
   return (
     <div className="modal_overlay">
       <div className="modal">
         <form
           className="flex flex-col gap-10"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={items ? handleSubmit(onUpdate) : handleSubmit(onSubmit)}
         >
           <div className="flex flex-row justify-between items-center">
             <h2>PostJob!</h2>
@@ -76,9 +103,15 @@ function PostJobModal({ closeModal }: { closeModal: () => void }) {
               {...register("status")}
             />
           </div>
-          <div className="text-center">
-            <button className="t2">Post Now</button>
-          </div>
+          {items ? (
+            <div className="text-center">
+              <button className="t2">Update Post</button>
+            </div>
+          ) : (
+            <div className="text-center">
+              <button className="t2">Post Now</button>
+            </div>
+          )}
         </form>
       </div>
     </div>

@@ -19,12 +19,11 @@ function LoginModal({ closeModal }: { closeModal: () => void }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const response = await postAPI("auth/login", data);
-    console.log(response, "respo");
     if (response) {
       Cookies.set("accessToken", response?.accessToken);
       Cookies.set("role", response?.role);
+      Cookies.set("id", response?.id);
       toast(response.message, { autoClose: 1000 });
-
       reset();
       closeModal();
     }

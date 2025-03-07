@@ -30,6 +30,7 @@ api.interceptors.response.use(
 
       Cookies.remove("accessToken");
       Cookies.remove("role");
+      Cookies.remove("id");
 
       window.location.href = "/";
 

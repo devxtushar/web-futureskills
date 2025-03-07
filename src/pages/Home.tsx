@@ -1,10 +1,19 @@
+import { useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { AiFillFire } from "react-icons/ai";
 import { useQuery } from "@tanstack/react-query";
-import { getAPI } from "../services/apiCalls";
+import { getAPI, postAPI } from "../services/apiCalls";
+import Cookies from "js-cookie";
 import Nav from "../components/Nav";
+import { toast } from "react-toastify";
+
+const CLOUD_NAME = "dcdkwntju";
+const UPLOAD_PRESET = "resumes";
 
 function Home() {
+  const [uploadId, setUploadId] = useState<number | undefined>();
+  const [file, setFile] = useState(null);
+
   const { data, isError } = useQuery({
     queryKey: ["jobs"],
     queryFn: () => getAPI(`jobs`),
@@ -13,6 +22,58 @@ function Home() {
   if (!data) return null;
 
   const { getJobs } = data;
+  async function handleApply(id: number) {
+    if (!Cookies.get("accessToken") || Cookies.get("role") === "recruiter") {
+      toast("Login as candidate to apply", { autoClose: 2000 });
+    } else {
+      setUploadId(id);
+    }
+  }
+
+  const handleFileChange = (event: any) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
+
+  const handleUpload = async (jobId: string) => {
+    if (!file) {
+      toast("Please select a PDF file!", { autoClose: 2000 });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("resource_type", "raw");
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      console.log(data, "data url");
+      const payload = {
+        candidateId: Cookies.get("id"),
+        jobId: jobId,
+        resumeUrl:
+          "https://devxtushar.vercel.app/pdfs/TusharMishraDevResume.pdf",
+      };
+      const parseFields: any = postAPI("applications", payload);
+      if (parseFields) {
+        toast("Applied Successfully!");
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+      toast("Error on uploading! Try again", { autoClose: 2000 });
+    }
+  };
 
   return (
     <div>
@@ -32,7 +93,7 @@ function Home() {
           <div className="flex flex-row flex-wrap gap-10">
             {getJobs.length > 0 ? (
               getJobs.map((items: any, i: number) => {
-                const { title, description, status } = items;
+                const { title, description, status, _id } = items;
                 return (
                   <div key={i} className="jobs_card flex flex-col gap-5">
                     <div className="flex flex-row justify-between gap-12 items-end">
@@ -62,11 +123,31 @@ function Home() {
                           {status}
                         </span>
                       </div>
-                      <button className="t5 flex flex-row gap-2 items-center">
-                        <AiFillFire size={18} />
-                        Apply Now
-                      </button>
+                      {Cookies.get("role") != "recruiter" && (
+                        <button
+                          className="t5 flex flex-row gap-2 items-center"
+                          onClick={() => handleApply(i)}
+                        >
+                          <AiFillFire size={18} />
+                          Apply Now
+                        </button>
+                      )}
                     </div>
+                    {uploadId === i && (
+                      <div className="flex flex-col gap-5">
+                        <input
+                          type="file"
+                          accept=".pdf"
+                          onChange={handleFileChange}
+                        />
+                        <button
+                          onClick={() => handleUpload(_id)}
+                          className="t5"
+                        >
+                          Upload Resume
+                        </button>
+                      </div>
+                    )}
                   </div>
                 );
               })

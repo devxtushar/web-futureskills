@@ -13,6 +13,8 @@ function Nav() {
   function handleLogout() {
     Cookies.remove("accessToken");
     Cookies.remove("role");
+    Cookies.remove("id");
+
     toast("Logout Successful!", { autoClose: 1000 });
     navigate("/");
   }

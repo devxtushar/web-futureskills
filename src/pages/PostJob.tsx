@@ -1,5 +1,4 @@
 import { GoDotFill } from "react-icons/go";
-import { AiFillFire } from "react-icons/ai";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useState } from "react";
 import PostJobModal from "../components/PostJobModal";
@@ -7,9 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { deleteAPI, getAPI } from "../services/apiCalls";
 import { MdDelete } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { MdEdit } from "react-icons/md";
 
 function PostJob() {
   const [postjobModal, setPostJobModal] = useState(false);
+  const [passItems, setPassItems] = useState("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -57,12 +58,22 @@ function PostJob() {
                     <h3 style={{ color: "#0d9488" }} className="font-semibold">
                       {title}
                     </h3>
-                    <MdDelete
-                      size={25}
-                      color="#0d9488"
-                      className="cursor-pointer"
-                      onClick={() => mutation.mutate(_id)}
-                    />
+                    <div className="flex flex-row gap-5">
+                      <MdEdit
+                        size={25}
+                        color="#0d9488"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setPostJobModal(!postjobModal), setPassItems(items);
+                        }}
+                      />
+                      <MdDelete
+                        size={25}
+                        color="#0d9488"
+                        className="cursor-pointer"
+                        onClick={() => mutation.mutate(_id)}
+                      />
+                    </div>
                   </div>
                   <h5>
                     {description && description.length > 200
@@ -81,10 +92,6 @@ function PostJob() {
                       )}
                       <span className="font-semibold capitalize">{status}</span>
                     </div>
-                    <button className="t5 flex flex-row gap-2 items-center">
-                      <AiFillFire size={18} />
-                      Apply Now
-                    </button>
                   </div>
                 </div>
               );
@@ -95,7 +102,10 @@ function PostJob() {
         </div>
       </section>
       {postjobModal && (
-        <PostJobModal closeModal={() => setPostJobModal(false)} />
+        <PostJobModal
+          closeModal={() => setPostJobModal(false)}
+          items={passItems}
+        />
       )}
     </main>
   );
