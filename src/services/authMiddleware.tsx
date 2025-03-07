@@ -2,7 +2,8 @@ import axios, { AxiosResponse, AxiosInstance } from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
-const BASE_URL = "http://localhost:5000/";
+const BASE_URL =
+  "http://futureskills-dev.eba-38tcivmm.ap-south-1.elasticbeanstalk.com/";
 
 const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
