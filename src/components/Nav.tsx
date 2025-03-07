@@ -22,9 +22,9 @@ function Nav() {
   return (
     <nav>
       <div className="max_width flex flex-wrap justify-between gap-5 nav_inside">
-        <div>
+        <div className="brand_name">
           <Link to="/">
-            <h2 className="font-bold" style={{ color: "#0d9488" }}>
+            <h2 className="font-bold " style={{ color: "#0d9488" }}>
               FutureSkillers
             </h2>
           </Link>

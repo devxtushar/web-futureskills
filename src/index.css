@@ -112,3 +112,8 @@ button {
     padding: 2em 0em;
   }
 }
+@media screen and (min-width: 0px) and (max-width: 780px) {
+  .brand_name {
+    display: none;
+  }
+}
