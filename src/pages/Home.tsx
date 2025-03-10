@@ -13,6 +13,7 @@ const UPLOAD_PRESET = "resumes";
 function Home() {
   const [uploadId, setUploadId] = useState<number | undefined>();
   const [file, setFile] = useState(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   const { data, isError } = useQuery({
     queryKey: ["jobs"],
@@ -46,32 +47,37 @@ function Home() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", UPLOAD_PRESET);
-    formData.append("resource_type", "raw");
 
     try {
+      setUploadLoading(true);
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`,
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
         {
           method: "POST",
           body: formData,
         }
       );
-
-      const data = await response.json();
-      console.log(data, "data url");
-      const payload = {
-        candidateId: Cookies.get("id"),
-        jobId: jobId,
-        resumeUrl:
-          "https://devxtushar.vercel.app/pdfs/TusharMishraDevResume.pdf",
-      };
-      const parseFields: any = postAPI("applications", payload);
-      if (parseFields) {
-        toast("Applied Successfully!");
+      if (response) {
+        setUploadLoading(false);
+        const data = await response.json();
+        console.log(data.secure_url, "data url");
+        const payload = {
+          candidateId: Cookies.get("id"),
+          jobId: jobId,
+          resumeUrl: data.secure_url,
+        };
+        const parseFields: any = await postAPI("applications", payload);
+        console.log(parseFields, "parsefiels");
+        if (parseFields) {
+          toast("Applied Successfully!");
+        }
       }
     } catch (error) {
+      setUploadLoading(false);
       console.error("Upload failed:", error);
       toast("Error on uploading! Try again", { autoClose: 2000 });
+    } finally {
+      setUploadLoading(false);
     }
   };
 
@@ -123,15 +129,25 @@ function Home() {
                           {status}
                         </span>
                       </div>
-                      {Cookies.get("role") != "recruiter" && (
-                        <button
-                          className="t5 flex flex-row gap-2 items-center"
-                          onClick={() => handleApply(i)}
-                        >
-                          <AiFillFire size={18} />
-                          Apply Now
-                        </button>
-                      )}
+                      {status === "active"
+                        ? Cookies.get("role") != "recruiter" && (
+                            <button
+                              className="t5 flex flex-row gap-2 items-center"
+                              onClick={() => handleApply(i)}
+                            >
+                              <AiFillFire size={18} />
+                              Apply Now
+                            </button>
+                          )
+                        : Cookies.get("role") != "recruiter" && (
+                            <button
+                              className="t5 flex flex-row gap-2 items-center"
+                              style={{ backgroundColor: "gray" }}
+                            >
+                              <AiFillFire size={18} />
+                              Apply Now
+                            </button>
+                          )}
                     </div>
                     {uploadId === i && (
                       <div className="flex flex-col gap-5">
@@ -144,7 +160,9 @@ function Home() {
                           onClick={() => handleUpload(_id)}
                           className="t5"
                         >
-                          Upload Resume
+                          {uploadLoading
+                            ? "Uploading..."
+                            : "        Upload Resume"}
                         </button>
                       </div>
                     )}
