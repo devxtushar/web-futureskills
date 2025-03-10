@@ -60,21 +60,18 @@ function Home() {
       if (response) {
         setUploadLoading(false);
         const data = await response.json();
-        console.log(data.secure_url, "data url");
         const payload = {
           candidateId: Cookies.get("id"),
           jobId: jobId,
           resumeUrl: data.secure_url,
         };
         const parseFields: any = await postAPI("applications", payload);
-        console.log(parseFields, "parsefiels");
         if (parseFields) {
           toast("Applied Successfully!");
         }
       }
     } catch (error) {
       setUploadLoading(false);
-      console.error("Upload failed:", error);
       toast("Error on uploading! Try again", { autoClose: 2000 });
     } finally {
       setUploadLoading(false);
@@ -160,9 +157,7 @@ function Home() {
                           onClick={() => handleUpload(_id)}
                           className="t5"
                         >
-                          {uploadLoading
-                            ? "Uploading..."
-                            : "        Upload Resume"}
+                          {uploadLoading ? "Uploading..." : "Upload Resume"}
                         </button>
                       </div>
                     )}

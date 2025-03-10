@@ -31,3 +31,26 @@
   border-radius: 4px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+table {
+  width: 100%;
+  overflow: scroll;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+th,
+td {
+  font-size: 1.6em;
+  font-weight: 400;
+  padding: 1em;
+}
+thead {
+  background-color: #0d9488;
+  color: white;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #e0f2f1;
+}
